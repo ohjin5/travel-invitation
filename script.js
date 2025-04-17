@@ -1,7 +1,15 @@
 function toggleMenu() {
-  const nav = document.getElementById("nav-links");
-  nav.classList.toggle("show");
+  const navLinks = document.getElementById("nav-links");
+  navLinks.classList.toggle("active");
 }
+
+// ✅ 메뉴 닫기: 링크 클릭 시 자동으로 닫힘
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    const navLinks = document.getElementById("nav-links");
+    navLinks.classList.remove("active");
+  });
+});
 
 function showMain() {
   document.getElementById('intro').style.display = 'none';
@@ -16,5 +24,7 @@ function showNextSlide() {
   currentSlide = (currentSlide + 1) % slides.length;
   slides[currentSlide].classList.add("active");
 }
+
+
 
 setInterval(showNextSlide, 4000); // 4초 간격

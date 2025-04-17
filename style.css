@@ -270,3 +270,12 @@ footer {
   margin-bottom: 8px;
   line-height: 1.5;
 }
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+}
+
+.nav-links.active {
+  display: flex;
+}

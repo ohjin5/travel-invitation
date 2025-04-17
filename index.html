@@ -4,105 +4,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>옹키동키 제주여행</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>여행 초대장 도착</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-image: url('image/mainimg.jpg');
+      /* 이미지 경로 수정 가능 */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .top-info {
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .date {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .clock {
+      font-size: 64px;
+      font-weight: 500;
+    }
+
+    .button-wrapper {
+      position: absolute;
+      bottom: 80px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .message-btn {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+      padding: 14px 28px;
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #4caf50;
+      font-weight: bold;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .message-btn:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
 <body>
-  <div id="header"></div> <!-- 여기에 header.html이 들어감 -->
-
-  <script>
-    // header.html 동적 삽입
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("header").innerHTML = data;
-      });
-  </script>
-  <!-- 🔹 본문 콘텐츠 -->
-  <div id="main">
-
-
-    <header class="hero">
-      <div class="hero-slide active" style="background-image: url('image/image.png');"></div>
-      <div class="hero-slide" style="background-image: url('image/image2.jpg');"></div>
-      <div class="hero-slide" style="background-image: url('image/image3.jpg');"></div>
-
-      <div class="hero-text">
-        <h1>옹키 동키의 제주여행</h1>
-        <p>4월 19일 ~ 21일, 함께 제주도로 떠나요 ✈️</p>
-      </div>
-    </header>
-
-    <section id="invite">
-      <h2>💌 초대의 말</h2>
-      <p>소중한 하나를 특별한 여행에 초대합니다.<br />
-        잊지 못할 추억을 함께 만들러 떠나요!</p>
-
-      <a href="invite_detail.html">
-        <button class="detail-btn">📖 자세히 읽기</button>
-      </a>
-    </section>
-
-    <section id="plan">
-      <h2>📅 여행 일정</h2>
-      <ul>
-        <li>Day 1 - 숙소에서 휴식</li>
-        <li>Day 2 - 꽃구경 및 드라이브</li>
-        <li>Day 3 - 부모님 선물 구매 후 귀가</li>
-      </ul>
-
-      <!-- 버튼 2개 나란히 배치 -->
-      <div class="button-group">
-        <a href="plan.html">
-          <button class="detail-btn">🌸 관광지 둘러보기</button>
-        </a>
-        <a href="food.html">
-          <button class="detail-btn">🍱 먹거리 구경하기</button>
-        </a>
-      </div>
-
-      <section id="ticket">
-        <h2>✈️ 항공권 확인</h2>
-        <p>4월 19일(토) 오전 20:35 청주 → 제주 / 이스타</p>
-        <p>4월 21일(월) 오후 21:15 제주 → 청주 / 진에어</p>
-      </section>
-
-      <section id="hotel">
-        <h2>🏨 숙소 안내</h2>
-        <p>
-          첫째날 숙소: 제주 노블레스 관광호텔<br />
-          둘째날 숙소: 제주 드문펜션
-        </p>
-        <a href="hotel.html">
-          <button class="detail-btn">🏡 숙소 자세히 보기</button>
-        </a>
-      </section>
-
-      <section id="souvenir">
-        <h2>🎁 기념품 소개</h2>
-        <ul>
-          <li>🍡 오메기떡</li>
-          <li>🍫 감귤 초콜릿</li>
-          <li>🍯 유채꿀</li>
-        </ul>
-        <a href="souvenir.html">
-          <button class="detail-btn">🎀 자세히 보기</button>
-        </a>
-      </section>
-
-      <section id="contact">
-        <h2>📞 연락처</h2>
-        <p>문의: 010-7454-0599<br />
-          이메일: hanasarang1204.com</p>
-      </section>
-
-      <footer>
-        <p>Copyright © 2025 하오커플. All rights reserved.</p>
-      </footer>
+  <!-- 🔼 상단 날짜 + 시계 -->
+  <div class="top-info">
+    <div class="date" id="today-date"></div>
+    <div class="clock" id="clock"></div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- 🔽 하단 버튼 -->
+  <div class="button-wrapper">
+    <a href="home.html">
+      <button id="letterBtn" class="message-btn">📩 초대장이 도착했습니다!</button>
+    </a>
+  </div>
+
+  <script>
+    // 날짜 자동 표시
+    const now = new Date();
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+    document.getElementById("today-date").textContent =
+      `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${week[now.getDay()]}요일`;
+
+    // 시간 자동 표시
+    const padZero = n => n.toString().padStart(2, '0');
+    document.getElementById("clock").textContent =
+      `${padZero(now.getHours())}:${padZero(now.getMinutes())}`;
+
+    // 버튼 등장 애니메이션
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById("letterBtn").classList.add("show");
+      }, 3000);
+    };
+  </script>
+
 </body>
 
 </html>
