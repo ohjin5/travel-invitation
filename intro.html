@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>여행 초대장 도착</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-image: url('image/mainimg.jpg');
+      /* 이미지 경로 수정 가능 */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .top-info {
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .date {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .clock {
+      font-size: 64px;
+      font-weight: 500;
+    }
+
+    .button-wrapper {
+      position: absolute;
+      bottom: 80px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .message-btn {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+      padding: 14px 28px;
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #4caf50;
+      font-weight: bold;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .message-btn:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🔼 상단 날짜 + 시계 -->
+  <div class="top-info">
+    <div class="date" id="today-date"></div>
+    <div class="clock" id="clock"></div>
+  </div>
+
+  <!-- 🔽 하단 버튼 -->
+  <div class="button-wrapper">
+    <a href="index.html">
+      <button id="letterBtn" class="message-btn">📩 초대장이 도착했습니다!</button>
+    </a>
+  </div>
+
+  <script>
+    // 날짜 자동 표시
+    const now = new Date();
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+    document.getElementById("today-date").textContent =
+      `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${week[now.getDay()]}요일`;
+
+    // 시간 자동 표시
+    const padZero = n => n.toString().padStart(2, '0');
+    document.getElementById("clock").textContent =
+      `${padZero(now.getHours())}:${padZero(now.getMinutes())}`;
+
+    // 버튼 등장 애니메이션
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById("letterBtn").classList.add("show");
+      }, 3000);
+    };
+  </script>
+</body>
+
+</html>

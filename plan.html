@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자세한 여행 계획</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+    }
+
+    .place-image-wrapper {
+      position: relative;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    .place-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: block;
+    }
+
+    .invisible-button {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .place {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .place h2 {
+      margin-top: 0;
+      color: #4CAF50;
+    }
+
+    .place h3 {
+      margin-bottom: 6px;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      margin: 12px 0;
+      background-color: #eee;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .photo-placeholder img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 16px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header"></div> <!-- 여기에 header.html이 들어감 -->
+
+  <script>
+    // header.html 동적 삽입
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      });
+  </script>
+  <h1>자세한 여행 계획</h1>
+
+  <!-- 제주 지도 + 클릭 이동 -->
+  <div class="place-image-wrapper">
+    <img src="image/jeju.png" alt="제주도 지도" class="place-image" />
+  </div>
+
+  <!-- ✅ 1. 조천 -->
+  <div class="place">
+    <h2>📍 조천</h2>
+
+    <div>
+      <h3>1) 감사공묘역(곁벚꽃)</h3>
+      <p>하나를 찍어주고 싶은 이쁜 곁벚꽃 있는 유적지야</p>
+      <div class="photo-placeholder">
+        <img src="image/감사공묘역.jfif" alt="감사공묘역" class="place-image" />
+      </div>
+    </div>
+
+    <div>
+      <h3>2) 낙선경로당(곁벚꽃)</h3>
+      <p>여기는 경로당인데 곁벚꽃이 이쁘게 있어서 이쁘대!</p>
+      <div class="photo-placeholder">
+        <img src="image/낙선경로당.jfif" alt="낙선경로당" class="place-image" />
+      </div>
+    </div>
+
+    <div>
+      <h3>3) 서우봉(유채꽃)</h3>
+      <p>손잡고 산책하며 오름과 유채꽃을 볼 수 있는 장소야!</p>
+      <div class="photo-placeholder">
+        <img src="image/서우봉.jfif" alt="서우봉" class="place-image" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ 2. 구좌 -->
+  <div class="place">
+    <h2>📍 구좌</h2>
+
+    <div>
+      <h3>1) 별방진(유채꽃)</h3>
+      <p>여기는 유채꽃이 이쁘게 있는 곳 중 하나야!</p>
+      <div class="photo-placeholder"> <img src="image/별방진.jfif" alt="서우봉" class="place-image" /></div>
+    </div>
+
+    <div>
+      <h3>2) 김녕해변(유채꽃)</h3>
+      <p>바다와 유채꽃을 같이 보고싶다면 여기!</p>
+      <div class="photo-placeholder"> <img src="image/김녕해변.jfif" alt="서우봉" class="place-image" /></div>
+    </div>
+
+    <div>
+      <h3>3) 송당무끈모루(이쁜 나무)</h3>
+      <p>대충 이쁜 나무 있는 곳이야! 폭삭 속았수다 느낌쓰</p>
+      <div class="photo-placeholder"> <img src="image/송당무끈모루.jfif" alt="서우봉" class="place-image" /></div>
+    </div>
+  </div>
+
+  <!-- ✅ 3. 표선 / 성산 -->
+  <div class="place">
+    <h2>📍 표선 / 성산</h2>
+
+    <div>
+      <h3>1) 보듬왓(다양한 꽃)</h3>
+      <p>다양한 꽃(하나)가 있는곳이야!</p>
+      <div class="photo-placeholder"> <img src="image/보롬왓.jfif" alt="서우봉" class="place-image" /></div>
+    </div>
+
+    <div>
+      <h3>2) 성산일출봉(유채꽃)</h3>
+      <p>성산일출봉과 넓게 핀 유채꽃이 있는 공간이야.</p>
+      <div class="photo-placeholder"> <img src="image/성산일출봉.jfif" alt="서우봉" class="place-image" /></div>
+    </div>
+
+    <div>
+      <h3>3) 성읍갯우꽃밭(들판)</h3>
+      <p>봄이면 갯우꽃이 만발하는 드넓은 들판, 사진 명소로 인기가 높대!</p>
+      <div class="photo-placeholder"> <img src="image/성읍.jfif" alt="서우봉" class="place-image" /></div>
+    </div>
+  </div>
+
+  <!-- 돌아가기 -->
+  <div style="text-align: center;">
+    <a class="back-btn" href="javascript:history.back()">← 이전 페이지로 돌아가기</a>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+
+</html>

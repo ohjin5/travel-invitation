@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>숙소 소개</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+      margin-top: 30px;
+    }
+
+    .hotel-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .hotel-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hotel-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .hotel-card h3 {
+      margin: 0 0 6px;
+      font-size: 1.2em;
+    }
+
+    .hotel-card p {
+      margin: 0 0 12px;
+      font-size: 0.95em;
+      color: #666;
+    }
+
+    .map-btn {
+      margin-top: auto;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 8px 12px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.9em;
+    }
+
+    .map-btn:hover {
+      background-color: #388e3c;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin: 40px auto 0;
+      padding: 10px 16px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: #388e3c;
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      /* ✅ 고정 비율 (예: 3:2) */
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* ✅ 이미지 잘림 없이 채우기 */
+      display: block;
+      border-radius: 10px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header"></div>
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      });
+
+    // 슬라이드 자동 전환
+    document.addEventListener("DOMContentLoaded", () => {
+      const sliders = document.querySelectorAll(".slider");
+
+      sliders.forEach(slider => {
+        const slides = slider.querySelectorAll(".slide");
+        let current = 0;
+
+        setInterval(() => {
+          slides[current].classList.remove("active");
+          current = (current + 1) % slides.length;
+          slides[current].classList.add("active");
+        }, 3000); // 3초마다 전환
+      });
+    });
+  </script>
+
+
+  <h1>🏡 숙소 상세 안내</h1>
+  <div class="hotel-container">
+    <div class="hotel-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/hotel1.jfif" alt="노블레스호텔1" /></div>
+        <div class="slide"><img src="image/hotel2.jfif" alt="노블레스호텔2" /></div>
+      </div>
+      <h3>첫째날 – 제주 노블레스 관광호텔</h3>
+      <p>📍 위치: 제주 제주시 삼무로 56</p>
+      <a class="map-btn"
+        href="https://map.naver.com/p/entry/place/1561904560?lng=126.5035474&lat=33.5012072&placePath=%2Fhome&entry=plt&searchType=place"
+        target="_blank">네이버 지도 보기</a>
+    </div>
+
+    <div class="hotel-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/hotel3.png" alt="노블레스호텔1" /></div>
+        <div class="slide"><img src="image/hotel4.png" alt="노블레스호텔2" /></div>
+      </div>
+      <h3>둘째날 – 제주 드문펜션</h3>
+      <p>📍 위치: 제주 제주시 구좌읍 김녕리 4192</p>
+      <a class="map-btn"
+        href="https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&ssc=tab.nx.all&query=%EC%A0%9C%EC%A3%BC+%EB%93%9C%EB%AC%B8%ED%8E%9C%EC%85%98+%ED%99%94%EC%9D%B4%ED%8A%B8&oquery=%EC%A0%9C%EC%A3%BC+%EB%93%9C%EB%AC%B8%ED%8E%9C%EC%85%98&tqi=jsZl%2FlqptbNssR2ugnCssssstC4-392855&ackey=0x9vxh53"
+        target="_blank">네이버 지도 보기</a>
+    </div>
+
+
+    <div style="text-align:center;">
+      <a class="back-btn" href="javascript:history.back()">← 돌아가기</a>
+    </div>
+</body>
+
+</html>

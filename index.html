@@ -1,15 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>옹키동키 제주여행</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  Hello world
+  <div id="header"></div> <!-- 여기에 header.html이 들어감 -->
+
+  <script>
+    // header.html 동적 삽입
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      });
+  </script>
+  <!-- 🔹 본문 콘텐츠 -->
+  <div id="main">
+
+
+    <header class="hero">
+      <div class="hero-slide active" style="background-image: url('image/image.png');"></div>
+      <div class="hero-slide" style="background-image: url('image/image2.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('image/image3.jpg');"></div>
+
+      <div class="hero-text">
+        <h1>옹키 동키의 제주여행</h1>
+        <p>4월 19일 ~ 21일, 함께 제주도로 떠나요 ✈️</p>
+      </div>
+    </header>
+
+    <section id="invite">
+      <h2>💌 초대의 말</h2>
+      <p>소중한 하나를 특별한 여행에 초대합니다.<br />
+        잊지 못할 추억을 함께 만들러 떠나요!</p>
+
+      <a href="invite_detail.html">
+        <button class="detail-btn">📖 자세히 읽기</button>
+      </a>
+    </section>
+
+    <section id="plan">
+      <h2>📅 여행 일정</h2>
+      <ul>
+        <li>Day 1 - 숙소에서 휴식</li>
+        <li>Day 2 - 꽃구경 및 드라이브</li>
+        <li>Day 3 - 부모님 선물 구매 후 귀가</li>
+      </ul>
+
+      <!-- 버튼 2개 나란히 배치 -->
+      <div class="button-group">
+        <a href="plan.html">
+          <button class="detail-btn">🌸 관광지 둘러보기</button>
+        </a>
+        <a href="food.html">
+          <button class="detail-btn">🍱 먹거리 구경하기</button>
+        </a>
+      </div>
+
+      <section id="ticket">
+        <h2>✈️ 항공권 확인</h2>
+        <p>4월 19일(토) 오전 20:35 청주 → 제주 / 이스타</p>
+        <p>4월 21일(월) 오후 21:15 제주 → 청주 / 진에어</p>
+      </section>
+
+      <section id="hotel">
+        <h2>🏨 숙소 안내</h2>
+        <p>
+          첫째날 숙소: 제주 노블레스 관광호텔<br />
+          둘째날 숙소: 제주 드문펜션
+        </p>
+        <a href="hotel.html">
+          <button class="detail-btn">🏡 숙소 자세히 보기</button>
+        </a>
+      </section>
+
+      <section id="souvenir">
+        <h2>🎁 기념품 소개</h2>
+        <ul>
+          <li>🍡 오메기떡</li>
+          <li>🍫 감귤 초콜릿</li>
+          <li>🍯 유채꿀</li>
+        </ul>
+        <a href="souvenir.html">
+          <button class="detail-btn">🎀 자세히 보기</button>
+        </a>
+      </section>
+
+      <section id="contact">
+        <h2>📞 연락처</h2>
+        <p>문의: 010-7454-0599<br />
+          이메일: hanasarang1204.com</p>
+      </section>
+
+      <footer>
+        <p>Copyright © 2025 하오커플. All rights reserved.</p>
+      </footer>
+  </div>
+
   <script src="script.js"></script>
 </body>
 

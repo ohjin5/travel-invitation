@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>제주 기념품 소개</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+      margin-top: 30px;
+    }
+
+    h2 {
+      color: #388e3c;
+      margin-top: 40px;
+    }
+
+    .souvenir-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .souvenir-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .souvenir-card h3 {
+      margin: 10px 0 6px;
+      font-size: 1.1em;
+    }
+
+    .souvenir-card p {
+      font-size: 0.95em;
+      color: #666;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin: 40px auto;
+      padding: 10px 16px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <script>
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      });
+
+    // 슬라이드 자동 전환
+    document.addEventListener("DOMContentLoaded", () => {
+      const sliders = document.querySelectorAll(".slider");
+
+      sliders.forEach(slider => {
+        const slides = slider.querySelectorAll(".slide");
+        let current = 0;
+
+        setInterval(() => {
+          slides[current].classList.remove("active");
+          current = (current + 1) % slides.length;
+          slides[current].classList.add("active");
+        }, 3000);
+      });
+    });
+  </script>
+
+  <h1>🎁 제주서 오셧수꽈</h1>
+
+  <!-- ✅ 부모님 선물용 -->
+  <h2>👪 부모님께 드리기 좋은 선물</h2>
+  <div class="souvenir-container">
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir3.jfif" alt="동백 디퓨저"></div>
+        <div class="slide"><img src="image/souvenir4.jfif" alt="동백 향초 세트"></div>
+      </div>
+      <h3>🌺 동백 디퓨저 & 향초</h3>
+      <p>제주 동백꽃의 은은한 향기를 담은 수공예 디퓨저와 캔들 세트입니다.</p>
+    </div>
+
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir5.jfif" alt="한라봉 꿀차 스틱"></div>
+        <div class="slide"><img src="image/souvenir6.jfif" alt="한라봉 티 패키지"></div>
+      </div>
+      <h3>🍯 한라봉 꿀차 스틱</h3>
+      <p>한라봉과 꿀을 담은 스틱형 티로, 따뜻하게 드시기 좋은 건강 음료입니다.</p>
+    </div>
+
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir1.jpg" alt="오메기떡"></div>
+        <div class="slide"><img src="image/souvenir2.jfif" alt="오메기떡 포장"></div>
+      </div>
+      <h3>🍡 오메기떡</h3>
+      <p>팥고물이 올라간 제주 전통 떡, 쫀득한 맛과 건강한 재료가 인상적입니다.</p>
+    </div>
+
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir7.jfif" alt="화과자 세트"></div>
+        <div class="slide"><img src="image/souvenir8.jfif" alt="화과자 박스"></div>
+      </div>
+      <h3>🍵 제주 화과자 세트</h3>
+      <p>전통을 살린 과자 속 제주 재료가 담긴 품격 있는 다과 선물세트입니다.</p>
+    </div>
+
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir9.jfif" alt="한라산 쿠키"></div>
+        <div class="slide"><img src="image/souvenir10.jfif" alt="한라산 초코쿠키"></div>
+      </div>
+      <h3>🍪 한라산 쿠키</h3>
+      <p>한라산 모양의 귀여운 제주 특산 쿠키, 고급 포장으로 부모님 선물로 딱!</p>
+    </div>
+  </div>
+
+  <!-- ✅ 친구 선물용 -->
+  <h2>👫 친구들에게 선물하기 좋은 기념품</h2>
+  <div class="souvenir-container">
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir11.jfif" alt="돌하르방 키링"></div>
+        <div class="slide"><img src="image/souvenir12.jfif" alt="캐릭터 키링"></div>
+      </div>
+      <h3>🗿 돌하르방 키링</h3>
+      <p>제주 상징 돌하르방이 미니 키링으로 탄생! 캐리어나 가방에 포인트 주기 좋아요.</p>
+    </div>
+
+    <div class="souvenir-card">
+      <div class="slider">
+        <div class="slide active"><img src="image/souvenir13.jfif" alt="투애니원 마카롱"></div>
+        <div class="slide"><img src="image/souvenir14.jfif" alt="마카롱 세트"></div>
+      </div>
+      <h3>🍬 투애니원 마카롱</h3>
+      <p>감귤, 우도 땅콩, 흑임자 등 제주 재료로 만든 감성 마카롱 세트입니다.</p>
+    </div>
+  </div>
+
+  <!-- 돌아가기 -->
+  <div style="text-align:center;">
+    <a class="back-btn" href="index.html#souvenir">← 초대장으로 돌아가기</a>
+  </div>
+</body>
+
+</html>
