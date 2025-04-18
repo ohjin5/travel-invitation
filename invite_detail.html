@@ -120,6 +120,44 @@
       font-size: 1em;
     }
 
+    /* ✅ 모달 스타일 */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+    }
+
+    #modal-content {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+    }
+
+    #modal-content p {
+      margin-bottom: 20px;
+      font-size: 1em;
+    }
+
+    #modalConfirm {
+      padding: 8px 16px;
+      background-color: #ffe812;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -137,88 +175,82 @@
 <body>
   <div id="header"></div>
 
+  <!-- ✅ 모달창 -->
+  <div id="modal">
+    <div id="modal-content">
+      <p>하고 싶은 말을 입력하세요 💬</p>
+      <button id="modalConfirm">확인</button>
+    </div>
+  </div>
+
   <div class="chat-wrapper">
-    <!-- ✅ 채팅 영역 -->
     <div class="chat-container" id="chat-container">
       <div class="date-banner">2025년 04월 21일 토요일</div>
 
-      <!-- 하나 오른쪽으로 이동 -->
       <div class="name" style="text-align: right; margin-right: 48px;">하나</div>
       <div class="message-box right" style="animation-delay: 0s;">
-        <div class="profile" style="background-image: url('image/profile.png');"></div>
+        <div class="profile" style="background-image: url('image/profile2.png');"></div>
         <div class="bubble">오빠! 이거 뭐야! 🌸</div>
         <div class="time">오후 5:17</div>
       </div>
 
-      <!-- 내가 왼쪽으로 -->
-
       <div class="message-box left" style="animation-delay: 5s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">안녕! 하나야</div>
         <div class="time">오후 5:18</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 7s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">하나를 위해 준비한 나의 선물이야 🤗</div>
         <div class="time">오후 5:18</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 10s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">이번 여행을 갑작스럽게 준비했는데</div>
         <div class="time">오후 5:18</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 13s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">재밌고 행복하게 다녀오면 좋겠어</div>
         <div class="time">오후 5:18</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 16s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">5월에 하나의 바쁜 여정이 시작되는데</div>
         <div class="time">오후 5:18</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 20s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">이 기억으로 함께 이겨내보자 ❤️</div>
         <div class="time">오후 5:18</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 23s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">5월에 좋은 결과가 있을거야! 얍!</div>
         <div class="time">오후 5:19</div>
       </div>
-
       <div class="message-box left" style="animation-delay: 26s;">
-        <div class="profile" style="background-image: url('image/profile2.png');"></div>
+        <div class="profile" style="background-image: url('image/profile.png');"></div>
         <div class="bubble">사랑해 하나야 💖</div>
         <div class="time">오후 5:19</div>
       </div>
     </div>
 
-    <!-- ✅ 하단 입력창 -->
     <div class="chat-input">
       <input type="text" id="chatInput" placeholder="메시지를 입력하세요..." />
     </div>
 
     <script>
-      // header 불러오기
-      fetch("header.html")
-        .then(res => res.text())
-        .then(data => {
-          document.getElementById("header").innerHTML = data;
-        });
-
-      // 메시지 애니메이션
       document.addEventListener("DOMContentLoaded", () => {
-        const messages = document.querySelectorAll('.message-box');
+        const input = document.getElementById('chatInput');
         const container = document.getElementById('chat-container');
+        const modal = document.getElementById('modal');
+        const modalConfirm = document.getElementById('modalConfirm');
 
+        let pendingLoveMessage = false;
+
+        // ✅ 자동 메시지 애니메이션
+        const messages = document.querySelectorAll('.message-box');
         messages.forEach((msg) => {
           const delay = parseFloat(msg.style.animationDelay || '0s') * 1000;
           setTimeout(() => {
@@ -226,44 +258,66 @@
             container.scrollTop = container.scrollHeight;
           }, delay);
         });
-      });
 
-      // ✅ "사랑해" 입력 처리
-      const input = document.getElementById('chatInput');
-      const container = document.getElementById('chat-container');
+        // ✅ 자동으로 모달창 띄우기 (26s 후)
+        setTimeout(() => {
+          modal.style.display = 'block';
+          pendingLoveMessage = true;
+        }, 35000); // 30초 후 자동으로 모달 오픈
 
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" && input.value.trim()) {
-          const msg = input.value.trim();
-          input.value = "";
+        // ✅ 입력 이벤트
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" && input.value.trim()) {
+            const msg = input.value.trim();
 
-          if (msg === "사랑해") {
-            appendMessage("사랑해", "right");
+            if (msg === "사랑해" && pendingLoveMessage) {
+              input.value = "";
+              appendMessage("사랑해", "right");
 
-            setTimeout(() => {
-              appendMessage("나도 사랑해 💖", "left");
-            }, 1000);
+              setTimeout(() => {
+                appendMessage("나도 사랑해 💖", "left");
+              }, 1000);
 
-            setTimeout(() => {
-              window.location.href = "home.html";
-            }, 2500);
+              setTimeout(() => {
+                appendMessage("편지 끝! 💖", "left");
+              }, 2000);
+
+              setTimeout(() => {
+                window.location.href = "home.html";
+              }, 3000);
+            } else {
+              input.value = "";
+              appendMessage(msg, "right");
+            }
           }
+        });
+
+        modalConfirm.addEventListener("click", () => {
+          modal.style.display = 'none';
+        });
+
+        function appendMessage(text, side) {
+          const box = document.createElement("div");
+          box.className = `message-box ${side}`;
+          box.innerHTML = `
+            <div class="profile" style="background-image: url('image/${side === "right" ? "profile2.png" : "profile.png"}');"></div>
+            <div class="bubble">${text}</div>
+            <div class="time">지금</div>
+          `;
+          container.appendChild(box);
+          box.style.opacity = "1";
+          container.scrollTop = container.scrollHeight;
         }
       });
 
-      function appendMessage(text, side) {
-        const box = document.createElement("div");
-        box.className = `message-box ${side}`;
-        box.innerHTML = `
-        <div class="profile" style="background-image: url('image/${side === "right" ? "profile.png" : "profile2.png"}');"></div>
-        <div class="bubble">${text}</div>
-        <div class="time">지금</div>
-      `;
-        container.appendChild(box);
-        box.style.opacity = "1";
-        container.scrollTop = container.scrollHeight;
-      }
+      // ✅ header 가져오기
+      fetch("header.html")
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById("header").innerHTML = data;
+        });
     </script>
+
     <script src="script.js"></script>
 </body>
 
