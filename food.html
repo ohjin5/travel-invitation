@@ -263,25 +263,25 @@
       }
 
       const ps = new kakao.maps.services.Places();
-      ps.keywordSearch(keyword, function (data, status) {
-        if (status === kakao.maps.services.Status.OK) {
-          const position = new kakao.maps.LatLng(data[0].y, data[0].x);
-          map.setCenter(position);
-          marker.setPosition(position);
-          marker.setMap(map);
+    ps.keywordSearch(keyword, function (data, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const position = new kakao.maps.LatLng(data[0].y, data[0].x);
+        map.setCenter(position);
+        marker.setPosition(position);
+        marker.setMap(map);
 
-          kakao.maps.event.addListener(marker, 'click', function () {
-            showModal({
-              name: data[0].place_name,
-              address: data[0].road_address_name || data[0].address_name,
-              phone: data[0].phone,
-              url: data[0].place_url
-            });
-          });
-        } else {
-          alert("검색 결과가 없습니다.");
-        }
-      });
+        showModal({
+          name: data[0].place_name,
+          address: data[0].road_address_name || data[0].address_name,
+          phone: data[0].phone,
+          url: data[0].place_url
+        });
+      } else {
+        alert("검색 결과가 없습니다.");
+      }
+    }, {
+      location: map.getCenter() // 현재 지도의 중심 기준으로 검색 범위 제한
+    });
     }
 
     function showModal(info) {
