@@ -104,6 +104,41 @@
     .back-btn:hover {
       background: #388e3c;
     }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 80% auto;
+      /* 위쪽 여백 증가 */
+      padding: 20px 30px;
+      border: 1px solid #888;
+      border-radius: 10px;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .modal-close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #000;
+    }
   </style>
 </head>
 
@@ -128,6 +163,18 @@
     </div>
     <div id="map"></div>
   </div>
+
+  <section
+    style="max-width: 600px; margin: 30px auto; padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 1px 5px rgba(0,0,0,0.1);">
+    <h2 style="color: #333; font-size: 1.2em; margin-bottom: 14px;">💡 페이지 활용 가이드</h2>
+    <ol style="padding-left: 20px; line-height: 1.6; color: #555;">
+      <li><strong>지도 검색</strong>: 위 검색창에 가고 싶은 장소를 입력하면 지도가 해당 위치로 이동해요.</li>
+      <li><strong>기본 마커 확인</strong>: 제주 숙소 두곳에는 기본 마커가 표시되어 있어요.</li>
+      <li><strong>사진 확인</strong>: 아래에는 꽃구경 추천 장소들과 실제 사진이 포함되어 있어!</li>
+      <li><strong>여행 동선 짜기</strong>: 지도와 장소 목록을 보면서 효율적인 여행 경로를 계획해보세요!</li>
+      <li><strong>모바일 최적화</strong>: 저장은 하지 못하니 따로 저장해두세요!</li>
+    </ol>
+  </section>
 
   <!-- ✅ 1. 조천 -->
   <div class="place">
@@ -220,20 +267,57 @@
     let map, marker;
 
     window.addEventListener("load", () => {
-      if (!window.kakao || !kakao.maps) {
-        console.error("카카오 SDK 로드 실패");
-        return;
-      }
-
       kakao.maps.load(() => {
         const container = document.getElementById("map");
         const options = {
-          center: new kakao.maps.LatLng(33.3617, 126.5292),
-          level: 9,
+          center: new kakao.maps.LatLng(33.4996, 126.5312), // 제주시 중심
+          level: 9
         };
         map = new kakao.maps.Map(container, options);
-        marker = new kakao.maps.Marker({position: options.center});
-        marker.setMap(map);
+
+        // ✅ 기본 마커 1: 제주 제주시 삼무로 56
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch("제주 제주시 삼무로 56", function (result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            const marker1 = new kakao.maps.Marker({
+              map: map,
+              position: coords,
+              title: "삼무로 56"
+            });
+
+            const infoWindow1 = new kakao.maps.InfoWindow({
+              content: '<div style="padding:6px 12px; font-size:14px;">🏡 첫째날 숙소</div>'
+            });
+
+            kakao.maps.event.addListener(marker1, 'click', function () {
+              infoWindow1.open(map, marker1);
+            });
+          }
+        });
+
+        // ✅ 기본 마커 2: 제주 제주시 구좌읍 김녕리 4192
+        geocoder.addressSearch("제주 제주시 구좌읍 김녕리 4192", function (result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            const marker2 = new kakao.maps.Marker({
+              map: map,
+              position: coords,
+              title: "김녕리 4192"
+            });
+
+            const infoWindow2 = new kakao.maps.InfoWindow({
+              content: '<div style="padding:6px 12px; font-size:14px;">🌊 둘째날 숙소</div>'
+            });
+
+            kakao.maps.event.addListener(marker2, 'click', function () {
+              infoWindow2.open(map, marker2);
+            });
+          }
+        });
+
+        // 검색 마커 (사용자 입력용)
+        marker = new kakao.maps.Marker();
       });
     });
 
@@ -250,12 +334,57 @@
           const position = new kakao.maps.LatLng(data[0].y, data[0].x);
           map.setCenter(position);
           marker.setPosition(position);
+          marker.setMap(map);
+
+          // 💡 마커 클릭 시 showModal 호출
+          kakao.maps.event.addListener(marker, 'click', function () {
+            showModal({
+              name: data[0].place_name,
+              address: data[0].road_address_name || data[0].address_name,
+              phone: data[0].phone,
+              url: data[0].place_url
+            });
+          });
+
         } else {
           alert("검색 결과가 없습니다. 다시 시도해주세요.");
         }
       });
     }
+
+
   </script>
+
+  <script>
+    function showModal(info) {
+      document.getElementById('modalTitle').textContent = info.name || '장소명';
+      document.getElementById('modalAddress').textContent = info.address || '-';
+      document.getElementById('modalPhone').textContent = info.phone || '없음';
+      const linkEl = document.getElementById('modalLink');
+      linkEl.href = info.url || '#';
+      linkEl.textContent = '카카오맵에서 보기';
+      document.getElementById('placeModal').style.display = 'block';
+    }
+  </script>
+
+  <script>
+    window.onclick = function (event) {
+      const modal = document.getElementById('placeModal');
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
+
+  <div id="placeModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="modal-close" onclick="document.getElementById('placeModal').style.display='none'">&times;</span>
+      <h3 id="modalTitle">장소명</h3>
+      <p><strong>📍 주소:</strong> <span id="modalAddress"></span></p>
+      <p><strong>📞 전화번호:</strong> <span id="modalPhone"></span></p>
+      <p><strong>🔗 더보기:</strong> <a id="modalLink" href="#" target="_blank">카카오맵에서 보기</a></p>
+    </div>
+  </div>
 
 </body>
 
